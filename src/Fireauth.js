@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import {auth} from './firebase'
+import GetData from './GetData'
 function Fireauth() {
    
     const [email,setEmail]=useState('');
@@ -35,7 +36,7 @@ function Fireauth() {
       {u}
       </div>
       :<div>
-    HELLO:
+    <GetData/>
      </div>}
       
      

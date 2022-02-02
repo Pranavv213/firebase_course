@@ -1,19 +1,40 @@
 import React,{useState,useEffect} from 'react';
 import {database} from './firebase'
 function Firebase1({n}) {
-    const [name,setName]=useState('')
+    const [username,setUsername]=useState('')
     const [no,setNo]=useState('')
     const [user,setUser]=useState('')
     const [data,setData]=useState('hello')
+    const [info,setInfo]=useState('')
     let createUserInDB=async()=>{
-        let data=await database.users.get();
+         let data=await database.users.get()
         data.forEach((obj)=>{
-            if(obj.data().name=="saitama")
+            if(obj.data().name=="docs")
             {
-                database.users.doc(obj.id).set({...obj.data(),image:n})
+                let array=obj.data().arr;
+                let i=0;
+                array.forEach(x=>{
+                    if(x.username==username)
+                    {
+                        i=1;
+                    }
+                })
+                if(i==1)
+                {
+                    console.log('user already found')
+                    setInfo('username not available, try with different username')
+                    i=0;
+                }
+                else
+                {
+                    let name1=obj.data().name;
+                    array.push({username,no})
+                  
+                    
+                    database.users.doc(obj.id).set({name:'docs',arr:array})
+                }
+               
                 
-                 //console.log(obj.id)
-                //q.push(obj.data().email)
             }
            
         })
@@ -24,17 +45,18 @@ function Firebase1({n}) {
   return <div>
       {/* {user==null?:<div>{data}</div>} */}
       {n}
-      <div>name<input value={name} onChange={(e)=>{
-          setName(e.target.value)
+      <div>username<input value={username} onChange={(e)=>{
+          setUsername(e.target.value)
       }}></input>
       <br></br>
-      no<input value={no} onChange={(e)=>{
+      password<input type="password" value={no} onChange={(e)=>{
           setNo(e.target.value)
       }}></input>
       <br></br>
-      <button onClick={createUserInDB}>Create</button></div>
+      <button onClick={createUserInDB}>Signup</button></div>
       <br></br>
-      <button onClick={fetch}>get data</button>
+      {info}
+      <a href="/login">already have an account</a>
       {/* {data} */}
   </div>;
 }

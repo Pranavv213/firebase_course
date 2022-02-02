@@ -7,15 +7,17 @@ function Firebase({n}) {
     const [no,setNo]=useState('')
     const [user,setUser]=useState(null)
     const [d,setD]=useState('hello')
+    const [im,setIm]=useState('')
  
     const getTodos = async() => {
         let q=[]
         let data=await database.users.get();
         data.forEach((obj)=>{
-            if(obj.data().email)
+            if(obj.data().email=='saitama')
             {
                 console.log(obj.data())
                 q.push(obj.data().email)
+                setIm(obj.data().image)
             }
            
         })
@@ -28,8 +30,11 @@ function Firebase({n}) {
       console.log()
     },[])
   return <div>
-    {d}
-     
+    
+     <img src={`https://firebasestorage.googleapis.com/v0/b/reels-2def6.appspot.com/o/%5Bobject%20File%5D%2F%5Bobject%20File%5D?alt=media&token=31778697-0dad-4d95-95c3-a197939b715e`}>
+
+       
+     </img>
       
   </div>;
 }
